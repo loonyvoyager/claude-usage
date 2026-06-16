@@ -22,6 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var popover: NSPopover!
     private var loginWindow: NSWindow?
+    private var settingsWindow: NSWindow?
     private var refreshTimer: Timer?
     private var displayTimer: Timer?
 
@@ -71,6 +72,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             settings: settings,
             onRefresh: { [weak self] in self?.refresh() },
             onLogin:   { [weak self] in self?.showLogin() },
+            onOpenSettings: { [weak self] in self?.showSettings() },
             onQuit:    { [weak self] in self?.quit() }
         )
         let hosting = NSHostingController(rootView: root)
@@ -185,6 +187,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         store.setState(.loading)
         updateButton()
         refresh()
+    }
+
+    // MARK: - Settings
+
+    private func showSettings() {
+        if popover.isShown { popover.performClose(nil) }
+        if let existing = settingsWindow {
+            NSApp.activate(ignoringOtherApps: true)
+            existing.makeKeyAndOrderFront(nil)
+            return
+        }
+        let view = SettingsView(settings: settings,
+                                onSignOut: { [weak self] in self?.signOut() })
+        let window = NSWindow(contentViewController: NSHostingController(rootView: view))
+        window.title = "ClaudeUsageBar Settings"
+        window.styleMask = [.titled, .closable]
+        window.isReleasedWhenClosed = false
+        window.center()
+        settingsWindow = window
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    private func signOut() {
+        if popover.isShown { popover.performClose(nil) }
+        settingsWindow?.close()
+        Task {
+            await session.clearSession()
+            store.setState(.needsLogin)
+            updateButton()
+        }
     }
 
     // MARK: - Quit

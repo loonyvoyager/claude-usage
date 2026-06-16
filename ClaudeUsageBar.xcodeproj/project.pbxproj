@@ -13,6 +13,7 @@
 		AC0000000000000000000004 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* LoginView.swift */; };
 		AC0000000000000000000005 /* UsagePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000005 /* UsagePopoverView.swift */; };
 		AC0000000000000000000006 /* Usage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000006 /* Usage.swift */; };
+		AC0000000000000000000007 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000007 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		AB0000000000000000000004 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB0000000000000000000005 /* UsagePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePopoverView.swift; sourceTree = "<group>"; };
 		AB0000000000000000000006 /* Usage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usage.swift; sourceTree = "<group>"; };
+		AB0000000000000000000007 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AA0000000000000000000006 /* ClaudeUsageBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeUsageBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -61,6 +63,7 @@
 				AB0000000000000000000004 /* LoginView.swift */,
 				AB0000000000000000000005 /* UsagePopoverView.swift */,
 				AB0000000000000000000006 /* Usage.swift */,
+				AB0000000000000000000007 /* SettingsView.swift */,
 			);
 			path = ClaudeUsageBar;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 				AC0000000000000000000004 /* LoginView.swift in Sources */,
 				AC0000000000000000000005 /* UsagePopoverView.swift in Sources */,
 				AC0000000000000000000006 /* Usage.swift in Sources */,
+				AC0000000000000000000007 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

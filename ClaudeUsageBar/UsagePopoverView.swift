@@ -18,6 +18,7 @@ struct UsagePopoverView: View {
 
     var onRefresh: () -> Void
     var onLogin: () -> Void
+    var onOpenSettings: () -> Void
     var onQuit: () -> Void
 
     /// Over this, the bar/label tints to a warning color. Sourced from settings.
@@ -232,6 +233,11 @@ struct UsagePopoverView: View {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             Spacer()
+            Button(action: onOpenSettings) {
+                Label("Settings", systemImage: "gearshape")
+            }
+            .labelStyle(.iconOnly)
+            .help("Settings…")
             Button("Quit", action: onQuit)
                 .foregroundStyle(.secondary)
         }
