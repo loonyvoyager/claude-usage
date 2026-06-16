@@ -71,6 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             settings: settings,
             onRefresh: { [weak self] in self?.refresh() },
             onLogin:   { [weak self] in self?.showLogin() },
+            onSignOut: { [weak self] in self?.signOut() },
             onQuit:    { [weak self] in self?.quit() }
         )
         let hosting = NSHostingController(rootView: root)
@@ -185,6 +186,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         store.setState(.loading)
         updateButton()
         refresh()
+    }
+
+    // MARK: - Sign out
+
+    private func signOut() {
+        if popover.isShown { popover.performClose(nil) }
+        Task {
+            await session.clearSession()
+            store.setState(.needsLogin)
+            updateButton()
+        }
     }
 
     // MARK: - Quit

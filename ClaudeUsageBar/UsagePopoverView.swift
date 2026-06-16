@@ -18,10 +18,13 @@ struct UsagePopoverView: View {
 
     var onRefresh: () -> Void
     var onLogin: () -> Void
+    var onSignOut: () -> Void
     var onQuit: () -> Void
 
     /// Over this, the bar/label tints to a warning color. Sourced from settings.
     private var warnThreshold: Int { settings.warnThreshold }
+
+    @State private var settingsExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -40,6 +43,7 @@ struct UsagePopoverView: View {
 
             Divider()
             menuBarModeRow
+            settingsDisclosure
             footer
         }
         .padding(.horizontal, 14)
@@ -222,6 +226,34 @@ struct UsagePopoverView: View {
             .controlSize(.small)
             .fixedSize()
         }
+    }
+
+    // MARK: - Inline settings (option 3)
+
+    private var settingsDisclosure: some View {
+        DisclosureGroup(isExpanded: $settingsExpanded) {
+            VStack(alignment: .leading, spacing: 8) {
+                Toggle("Launch at login", isOn: $settings.launchAtLogin)
+                HStack {
+                    Text("Refresh every").foregroundStyle(.secondary)
+                    Spacer()
+                    Picker("", selection: $settings.refreshIntervalMinutes) {
+                        ForEach(AppSettings.refreshChoices, id: \.self) { minutes in
+                            Text(minutes == 1 ? "1 min" : "\(minutes) min").tag(minutes)
+                        }
+                    }
+                    .labelsHidden().fixedSize()
+                }
+                Stepper("Warning at \(settings.warnThreshold)%",
+                        value: $settings.warnThreshold, in: 50...95, step: 5)
+                Button("Sign out", role: .destructive, action: onSignOut)
+                    .padding(.top, 2)
+            }
+            .padding(.top, 6)
+        } label: {
+            Text("More settings").font(.caption).foregroundStyle(.secondary)
+        }
+        .controlSize(.small)
     }
 
     // MARK: - Footer
