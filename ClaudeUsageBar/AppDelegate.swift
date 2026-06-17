@@ -61,6 +61,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
             button.target = self
             button.action = #selector(togglePopover)
         }
+        pinStatusItemWidth()
+    }
+
+    /// Pin the status item to a fixed width (sized to the widest content) so that
+    /// changing the display mode or values never resizes it — a resize would shift
+    /// the anchored popover. Content sits centered within the fixed slot.
+    private func pinStatusItemWidth() {
+        let font = statusItem.button?.font ?? NSFont.menuBarFont(ofSize: 0)
+        // Widest text we render: "% / time left" with a 3-digit % and the longest
+        // session time-left (the session window is < 5h, so "4h59m").
+        let widest = "100%/4h59m" as NSString
+        let width = widest.size(withAttributes: [.font: font]).width
+        statusItem.length = ceil(width) + 12
     }
 
     private func setupPopover() {
