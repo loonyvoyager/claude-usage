@@ -12,7 +12,7 @@ import AppKit
 import SwiftUI
 
 @MainActor
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private let store = UsageStore()
     private let session = ClaudeSession()
@@ -25,9 +25,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var refreshTimer: Timer?
     private var displayTimer: Timer?
 
-    // Phase 4 will make this a setting; sensible default.
-    private let refreshInterval: TimeInterval = 300   // 5 min
-
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -36,7 +33,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         setupStatusItem()
         setupPopover()
-        settings.onChange = { [weak self] in self?.updateButton() }
+        settings.onChange = { [weak self] in self?.applySettings() }
         startRefreshTimer()
         startDisplayTimer()
 
@@ -74,11 +71,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             settings: settings,
             onRefresh: { [weak self] in self?.refresh() },
             onLogin:   { [weak self] in self?.showLogin() },
+            onSignOut: { [weak self] in self?.signOut() },
             onQuit:    { [weak self] in self?.quit() }
         )
         let hosting = NSHostingController(rootView: root)
         hosting.sizingOptions = [.preferredContentSize]   // popover tracks SwiftUI content height
         popover.contentViewController = hosting
+        popover.delegate = self
+    }
+
+    /// Collapse the inline settings panel whenever the popover closes (any way:
+    /// toggle, click-outside, sign-out) so it always reopens collapsed.
+    func popoverDidClose(_ notification: Notification) {
+        settings.settingsExpanded = false
     }
 
     @objc private func togglePopover() {
@@ -97,11 +102,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func startRefreshTimer() {
         refreshTimer?.invalidate()
-        refreshTimer = Timer.scheduledTimer(timeInterval: refreshInterval,
+        let interval = TimeInterval(max(1, settings.refreshIntervalMinutes) * 60)
+        refreshTimer = Timer.scheduledTimer(timeInterval: interval,
                                             target: self,
                                             selector: #selector(timerFired),
                                             userInfo: nil,
                                             repeats: true)
+    }
+
+    /// React to a settings change: pick up a new interval and re-render the bar.
+    private func applySettings() {
+        startRefreshTimer()
+        updateButton()
     }
 
     /// Re-render the menu-bar label every minute so the "% / time left" mode's
@@ -183,6 +195,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refresh()
     }
 
+    // MARK: - Sign out
+
+    private func signOut() {
+        if popover.isShown { popover.performClose(nil) }
+        Task {
+            await session.clearSession()
+            store.setState(.needsLogin)
+            updateButton()
+        }
+    }
+
     // MARK: - Quit
 
     private func quit() { NSApp.terminate(nil) }
@@ -191,6 +214,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func updateButton() {
         guard let button = statusItem.button else { return }
+        button.contentTintColor = nil               // reset; renderLoaded re-applies if over threshold
         switch store.state {
         case .loaded(let usage):
             renderLoaded(button, usage)
@@ -213,7 +237,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Render the loaded state per the user's chosen menu-bar mode.
     private func renderLoaded(_ button: NSStatusBarButton, _ usage: Usage) {
+        button.contentTintColor = usage.sessionPercent >= settings.warnThreshold ? .systemOrange : nil
         switch settings.menuBarMode {
+        case .iconOnly:
+            button.image = NSImage(systemSymbolName: symbolName(for: usage.sessionPercent),
+                                   accessibilityDescription: "Claude usage \(usage.sessionPercent)%")
+            button.imagePosition = .imageOnly
+            button.title = ""
         case .iconPercent:
             button.image = NSImage(systemSymbolName: symbolName(for: usage.sessionPercent),
                                    accessibilityDescription: "Claude usage \(usage.sessionPercent)%")

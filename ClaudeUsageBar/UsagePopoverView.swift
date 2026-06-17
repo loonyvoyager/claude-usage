@@ -18,10 +18,11 @@ struct UsagePopoverView: View {
 
     var onRefresh: () -> Void
     var onLogin: () -> Void
+    var onSignOut: () -> Void
     var onQuit: () -> Void
 
-    /// Over this, the bar/label tints to a warning color (Phase 4 makes it a setting).
-    private let warnThreshold = 80
+    /// Over this, the bar/label tints to a warning color. Sourced from settings.
+    private var warnThreshold: Int { settings.warnThreshold }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -41,6 +42,11 @@ struct UsagePopoverView: View {
             Divider()
             menuBarModeRow
             footer
+
+            if settings.settingsExpanded {
+                Divider()
+                settingsPanel
+            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 9)
@@ -224,6 +230,29 @@ struct UsagePopoverView: View {
         }
     }
 
+    // MARK: - Inline settings panel (toggled by the footer gear; expands the popover under the layout)
+
+    private var settingsPanel: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Toggle("Launch at login", isOn: $settings.launchAtLogin)
+            HStack {
+                Text("Refresh every").foregroundStyle(.secondary)
+                Spacer()
+                Picker("", selection: $settings.refreshIntervalMinutes) {
+                    ForEach(AppSettings.refreshChoices, id: \.self) { minutes in
+                        Text(minutes == 1 ? "1 min" : "\(minutes) min").tag(minutes)
+                    }
+                }
+                .labelsHidden().fixedSize()
+            }
+            Stepper("Warning at \(settings.warnThreshold)%",
+                    value: $settings.warnThreshold, in: 50...95, step: 5)
+            Button("Sign out", role: .destructive, action: onSignOut)
+                .padding(.top, 2)
+        }
+        .controlSize(.small)
+    }
+
     // MARK: - Footer
 
     private var footer: some View {
@@ -232,6 +261,13 @@ struct UsagePopoverView: View {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             Spacer()
+            Button {
+                settings.settingsExpanded.toggle()
+            } label: {
+                Label("Settings", systemImage: settings.settingsExpanded ? "gearshape.fill" : "gearshape")
+            }
+            .labelStyle(.iconOnly)
+            .help("Settings")
             Button("Quit", action: onQuit)
                 .foregroundStyle(.secondary)
         }
