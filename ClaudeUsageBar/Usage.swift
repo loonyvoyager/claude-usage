@@ -155,6 +155,11 @@ final class AppSettings: ObservableObject {
         }
     }
 
+    /// Transient UI state (NOT persisted): whether the popover's settings panel is
+    /// expanded. AppDelegate resets it to false when the popover closes, so it
+    /// always starts collapsed on the next open.
+    @Published var settingsExpanded = false
+
     /// Refresh cadences (minutes) offered by the settings UI.
     static let refreshChoices = [1, 5, 15, 30]
 

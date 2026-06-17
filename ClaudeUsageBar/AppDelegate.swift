@@ -12,7 +12,7 @@ import AppKit
 import SwiftUI
 
 @MainActor
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private let store = UsageStore()
     private let session = ClaudeSession()
@@ -77,6 +77,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let hosting = NSHostingController(rootView: root)
         hosting.sizingOptions = [.preferredContentSize]   // popover tracks SwiftUI content height
         popover.contentViewController = hosting
+        popover.delegate = self
+    }
+
+    /// Collapse the inline settings panel whenever the popover closes (any way:
+    /// toggle, click-outside, sign-out) so it always reopens collapsed.
+    func popoverDidClose(_ notification: Notification) {
+        settings.settingsExpanded = false
     }
 
     @objc private func togglePopover() {

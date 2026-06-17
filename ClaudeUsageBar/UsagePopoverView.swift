@@ -24,8 +24,6 @@ struct UsagePopoverView: View {
     /// Over this, the bar/label tints to a warning color. Sourced from settings.
     private var warnThreshold: Int { settings.warnThreshold }
 
-    @State private var settingsExpanded = false
-
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             header
@@ -45,7 +43,7 @@ struct UsagePopoverView: View {
             menuBarModeRow
             footer
 
-            if settingsExpanded {
+            if settings.settingsExpanded {
                 Divider()
                 settingsPanel
             }
@@ -264,9 +262,9 @@ struct UsagePopoverView: View {
             }
             Spacer()
             Button {
-                settingsExpanded.toggle()
+                settings.settingsExpanded.toggle()
             } label: {
-                Label("Settings", systemImage: settingsExpanded ? "gearshape.fill" : "gearshape")
+                Label("Settings", systemImage: settings.settingsExpanded ? "gearshape.fill" : "gearshape")
             }
             .labelStyle(.iconOnly)
             .help("Settings")
