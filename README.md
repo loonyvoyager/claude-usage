@@ -92,8 +92,15 @@ degrades to a graceful error rather than a crash.
   conditionally, a last-updated stamp, and a session-history sparkline
   (auto-scaled, drawn from the in-memory ring buffer), and a Credits row for
   the `extra_usage` pay-as-you-go pool (hidden when not enabled).
-- **Phase 4 — Settings:** ◐ started early — a persisted menu-bar display mode
-  (*Icon + %* vs *% / time left*, e.g. `14%/3h29m`) selectable in the dropdown,
-  and the popover compacted ~25%. Launch-at-login / sign-out still to come.
+- **Phase 3 — Pixel-art menu-bar icon:** ☐ deferred (art direction TBD).
+- **Phase 4 — Settings & polish:** ✅ launch at login, refresh interval, warning
+  threshold (tints the popover + menu bar), menu-bar display mode (Icon only /
+  Icon + % / % + time left), and sign-out — all persisted. Settings open from a
+  footer gear that expands a panel beneath the popover and collapses when it
+  closes. (Pixel-icon / animate toggles wait for Phase 3.)
+
+> Launch-at-login uses `SMAppService`, which registers the app at its current
+> path — reliable once the app is in `/Applications`, but may not persist when
+> run from Xcode's DerivedData.
 
 See the roadmap in `CLAUDE_CODE_BRIEF.md` §5 for later phases.
