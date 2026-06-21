@@ -1,11 +1,31 @@
 # ClaudeUsageBar
 
 A native macOS **menu bar** app that shows your current Claude usage (session %,
-reset time) without opening claude.ai → Settings → Usage.
+weekly %, per-model, reset times, extra-usage credits) without opening claude.ai →
+Settings → Usage.
 
-> Read `CLAUDE_CODE_BRIEF.md` first — it is the source of truth for scope,
-> locked decisions, architecture invariants, and the phased roadmap. This README
-> is just how to build and run.
+> **Unofficial — not affiliated with, or endorsed by, Anthropic.** It reads the
+> same internal endpoint claude.ai's own usage page uses; there is no public API,
+> so it can break if that changes. Provided as-is under the MIT `LICENSE`.
+
+## Install
+
+Grab the latest **`ClaudeUsageBar.dmg`** from the
+[Releases](https://github.com/loonyvoyager/minimal-usage/releases) page, open it,
+and drag the app to Applications. It's signed and notarized by Apple, so it opens
+with no Gatekeeper warning.
+
+After launch there's **no Dock icon and no window** — it's a menu-bar app. Look
+for the gauge icon near the top-right of the menu bar, click it, and sign in to
+claude.ai once.
+
+> Building a signed release yourself? See [`DISTRIBUTION.md`](DISTRIBUTION.md).
+
+---
+
+> The rest of this README is for developers. Read `CLAUDE_CODE_BRIEF.md` first —
+> it is the source of truth for scope, locked decisions, architecture invariants,
+> and the phased roadmap.
 
 ## Requirements
 
@@ -104,3 +124,7 @@ degrades to a graceful error rather than a crash.
 > run from Xcode's DerivedData.
 
 See the roadmap in `CLAUDE_CODE_BRIEF.md` §5 for later phases.
+
+## License
+
+MIT — see [`LICENSE`](LICENSE). © 2026 Grigorii Lapin. Not affiliated with Anthropic.
