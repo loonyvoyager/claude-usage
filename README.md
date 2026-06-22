@@ -13,8 +13,8 @@ clock: no Dock icon, no window.
 > without breaking flow to go check the website.
 
 <p align="left">
-  <img src="assets/screenshot.png" width="720"
-       alt="UsageBar menu-bar dropdown showing session, weekly, per-model, and credit usage">
+  <img src="assets/demo.gif" width="680"
+       alt="Usage Bar — a menu-bar demo of session, weekly, per-model, and credit usage">
 </p>
 
 <p align="left">
