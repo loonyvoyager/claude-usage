@@ -1,130 +1,102 @@
 # ClaudeUsageBar
 
-A native macOS **menu bar** app that shows your current Claude usage (session %,
-weekly %, per-model, reset times, extra-usage credits) without opening claude.ai →
-Settings → Usage.
+[![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111111?logo=apple&logoColor=white)](#requirements)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/loonyvoyager/claude-usage?label=release)](https://github.com/loonyvoyager/claude-usage/releases/latest)
 
-> **Unofficial — not affiliated with, or endorsed by, Anthropic.** It reads the
-> same internal endpoint claude.ai's own usage page uses; there is no public API,
-> so it can break if that changes. Provided as-is under the MIT `LICENSE`.
+A tiny native **macOS menu-bar app** that shows your current **Claude usage** at a
+glance — session %, weekly %, per-model split, reset countdowns, and pay-as-you-go
+credits — so you never have to open claude.ai → Settings → Usage. It sits by your
+clock: no Dock icon, no window.
 
-## Install
+> Glance up and see how much of your session you've burned and when it resets —
+> without breaking flow to go check the website.
 
-Grab the latest **`ClaudeUsageBar.dmg`** from the
-[Releases](https://github.com/loonyvoyager/claude-usage/releases) page, open it,
-and drag the app to Applications. It's signed and notarized by Apple, so it opens
-with no Gatekeeper warning.
+<p align="center">
+  <img src="assets/screenshot.png" width="720"
+       alt="ClaudeUsageBar menu-bar dropdown showing session, weekly, per-model, and credit usage">
+</p>
 
-After launch there's **no Dock icon and no window** — it's a menu-bar app. Look
-for the gauge icon near the top-right of the menu bar, click it, and sign in to
-claude.ai once.
+<p align="center">
+  <a href="https://github.com/loonyvoyager/claude-usage/releases/latest/download/ClaudeUsageBar.dmg"><b>⬇&nbsp; Download ClaudeUsageBar.dmg</b></a><br>
+  <sub>Signed &amp; notarized — opens with no Gatekeeper warning.</sub>
+</p>
 
-> Building a signed release yourself? See [`DISTRIBUTION.md`](DISTRIBUTION.md).
+> **Unofficial — not affiliated with, or endorsed by, Anthropic.**
+> See [Trademark / not affiliated](#trademark--not-affiliated).
 
----
+## What it shows
 
-> The rest of this README is for developers. Read `CLAUDE_CODE_BRIEF.md` first —
-> it is the source of truth for scope, locked decisions, architecture invariants,
-> and the phased roadmap.
+- **Session window** — % used, a reset countdown, and a sparkline of recent samples.
+- **Weekly window** — % used + reset (for plans with a weekly cap).
+- **By model** — per-model usage (e.g. Opus / Sonnet) when claude.ai exposes it.
+- **Credits** — pay-as-you-go "extra usage" spend vs. your monthly cap.
+- **Menu-bar label** — choose `% / time left` (e.g. `6%/4h3m`), `Icon + %`, or
+  `Icon only`; it tints orange past a warning threshold you set.
+
+Each row appears only if claude.ai returns that data, so the panel stays tidy.
 
 ## Requirements
 
-- macOS 13.0+
-- Xcode 15+ (developed/verified with Xcode 26.5, Swift 5 language mode)
+- macOS 13.0 or later
+- A claude.ai account (Pro / Max / Team — anything with a usage page)
 
-## Build & run (Xcode)
+## Install
 
-1. Open `ClaudeUsageBar.xcodeproj`.
-2. Select the **ClaudeUsageBar** scheme (already shared) and a *My Mac* destination.
-3. If prompted about signing: under *Signing & Capabilities*, set **Team** to your
-   personal team, or set signing to *Sign to Run Locally* / *None*. This is a
-   personal local tool — no paid account needed to run it on your own Mac.
-4. **Run** (⌘R).
+1. Download **`ClaudeUsageBar.dmg`** from
+   [Releases](https://github.com/loonyvoyager/claude-usage/releases/latest), open
+   it, and drag the app into **Applications**.
+2. It's **signed and notarized**, so it just opens — no right-click, no Gatekeeper
+   warning.
+3. It's menu-bar-only (**no Dock icon, no window**). Click the gauge near your
+   clock and **sign in to claude.ai once**; after that it stays signed in.
 
-There is **no Dock icon and no app window** — it's a menu bar agent
-(`LSUIElement = true`). Look for the gauge icon in the right side of the menu bar.
+Settings — launch at login, refresh interval, warning threshold, menu-bar style,
+and sign out — live behind the ⚙︎ gear in the dropdown.
 
-### First launch
+## Privacy
 
-- On first run you're **not signed in** → click the menu bar icon → **Sign in to
-  Claude**. A window opens with claude.ai's real login (embedded `WKWebView`).
-- Sign in once. Cookies persist in the shared `WKWebsiteDataStore`, so you stay
-  signed in across launches.
-- After login the popover should leave the "Not signed in" state and show a usage
-  value (see the endpoint caveat below).
+Your credentials **never leave your Mac**. Sign-in happens in an embedded
+`WKWebView` (the real claude.ai login) and cookies stay in the app's local data
+store. **No API key, no telemetry, no third-party servers.**
 
-## Build & verify (command line)
+## How it works
 
-```sh
-xcodebuild -project ClaudeUsageBar.xcodeproj -scheme ClaudeUsageBar \
-  -configuration Debug -destination 'platform=macOS' \
-  CODE_SIGNING_ALLOWED=NO build
-```
+There's no official consumer usage API, so the app reads the same internal
+endpoint claude.ai's own usage page calls — by running `fetch()` inside a hidden
+web view on the claude.ai origin, so it rides your normal logged-in session.
+Because that endpoint is internal, it can change without notice; all of that
+knowledge is isolated in one file (`ClaudeSession.swift`) with defensive parsing,
+so a change degrades to a visible "couldn't read usage" message (never a crash)
+and is a one-file fix.
 
-This is the fast "does it still compile" check used during development.
+## Build from source
 
-## Architecture (see brief §3 for the invariants)
+Open `ClaudeUsageBar.xcodeproj` in Xcode and run (⌘R). To build a signed,
+notarized release for distribution, see [`DISTRIBUTION.md`](DISTRIBUTION.md).
+
+<details>
+<summary>Project layout</summary>
 
 | File | Role |
 |------|------|
-| `ClaudeUsageBarApp.swift` | `@main` entry; menu-bar-only scene (`Settings{}`). |
-| `AppDelegate.swift` | `NSStatusItem`, a borderless dropdown panel (`KeyPanel`), login window, refresh timer. The only place that wires network → store → UI. |
-| `ClaudeSession.swift` | **Quarantined** cookie session + usage fetch + parsing. The *only* file that knows URLs / JSON keys / cookies. |
-| `LoginView.swift` | Embedded `WKWebView` login; persists cookies in the shared data store. |
-| `UsagePopoverView.swift` | SwiftUI dropdown UI. Reads state, calls closures, never touches the network. |
-| `Usage.swift` | `Usage` model + observable `UsageStore` / `UsageState`. |
+| `ClaudeUsageBarApp.swift` | `@main` entry; menu-bar-only scene. |
+| `AppDelegate.swift` | Status item, the dropdown panel, login window, refresh timer; the one place that wires network → store → UI. |
+| `ClaudeSession.swift` | **Quarantined** cookie session + usage fetch + parsing — the only file that knows URLs / JSON keys / cookies. |
+| `LoginView.swift` | Embedded `WKWebView` login. |
+| `UsagePopoverView.swift` | SwiftUI dropdown UI; reads state, never touches the network. |
+| `Usage.swift` | `Usage` model + observable store + settings. |
 
-**Data flow is one way:** `ClaudeSession` → `UsageStore.state` (enum) → UI.
+State flows one way: `ClaudeSession` → `UsageStore` → SwiftUI.
+</details>
 
-### How usage is fetched
+## Trademark / not affiliated
 
-Rather than reverse-engineer request headers, `ClaudeSession` runs the usage
-request *inside a hidden `WKWebView` on the claude.ai origin* via
-`callAsyncJavaScript("fetch(...)")`. The request therefore carries exactly the
-cookies, origin, and credentials the real web app uses — no header guessing, no
-httpOnly-cookie copying, no CORS. The login web view and this hidden web view
-share `WKWebsiteDataStore.default()`, so one sign-in covers both.
-
-## Endpoint (verified)
-
-There is **no official consumer usage API**. ClaudeUsageBar calls the same
-internal endpoint claude.ai's own usage page uses, now **confirmed** (2026-06-16):
-
-- `GET /api/organizations` → array of orgs; each has a top-level `uuid`.
-- `GET /api/organizations/{org}/usage` → `{ five_hour, seven_day,
-  seven_day_opus/sonnet, extra_usage, … }`, where `five_hour` is the session
-  window and `seven_day` the weekly one.
-
-Full shape, field mapping, and parsing gotchas (0–100 utilization scale,
-microsecond ISO timestamps, nullable resets) live in `ENDPOINT_NOTES.md`. This
-is still an internal endpoint and may change without notice — `ClaudeSession`
-parses the known keys explicitly with a defensive fallback, so a future change
-degrades to a graceful error rather than a crash.
-
-## Status
-
-- **Phase 0 — Build & smoke test:** ✅ builds clean (CLI + Xcode), launches as a
-  menu bar agent without crashing, login window wired. (One human check left:
-  open in Xcode, sign in, confirm the popover leaves "Not signed in".)
-- **Phase 1 — Endpoint truth pass:** ✅ real endpoint verified and parsed
-  correctly (see `ENDPOINT_NOTES.md`); dead candidates removed.
-- **Phase 2 — Extended data:** ✅ weekly + per-model (Opus/Sonnet) render
-  conditionally, a last-updated stamp, and a session-history sparkline
-  (auto-scaled, drawn from the in-memory ring buffer), and a Credits row for
-  the `extra_usage` pay-as-you-go pool (hidden when not enabled).
-- **Phase 3 — Pixel-art menu-bar icon:** ☐ deferred (art direction TBD).
-- **Phase 4 — Settings & polish:** ✅ launch at login, refresh interval, warning
-  threshold (tints the popover + menu bar), menu-bar display mode (Icon only /
-  Icon + % / % + time left), and sign-out — all persisted. Settings open from a
-  footer gear that expands a panel beneath the popover and collapses when it
-  closes. (Pixel-icon / animate toggles wait for Phase 3.)
-
-> Launch-at-login uses `SMAppService`, which registers the app at its current
-> path — reliable once the app is in `/Applications`, but may not persist when
-> run from Xcode's DerivedData.
-
-See the roadmap in `CLAUDE_CODE_BRIEF.md` §5 for later phases.
+This is an unofficial, open-source project. **It is not affiliated with, endorsed
+by, or sponsored by Anthropic.** "Claude" and the Claude logo are trademarks of
+Anthropic. The app reads an internal claude.ai endpoint that has no public API and
+may change or break at any time; use it at your own discretion.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE). © 2026 Grigorii Lapin. Not affiliated with Anthropic.
+[MIT](LICENSE) © 2026 Grigorii Lapin.

@@ -1,0 +1,25 @@
+# Changelog
+
+Notable changes to ClaudeUsageBar. Format loosely follows
+[Keep a Changelog](https://keepachangelog.com/); versions track app releases.
+
+## [0.1.0] — unreleased (first public release)
+
+### Added
+- Menu-bar app showing Claude **session** and **weekly** usage (% + reset
+  countdowns), a **per-model** breakdown, and pay-as-you-go **credits** — each row
+  shown only when claude.ai exposes that data.
+- In-memory **session-history sparkline**.
+- Three **menu-bar display modes** — `% / time left`, `Icon + %`, `Icon only` —
+  with a configurable warning-threshold tint.
+- **Settings** (persisted): launch at login, refresh interval (1 / 5 / 15 / 30
+  min), warning threshold, and sign out — in an expandable in-popover panel.
+- Embedded claude.ai **web-view login**; credentials never leave the device, no
+  telemetry.
+- Beak-less, right-aligned dropdown panel with a minimal-width status item.
+- Signed & **notarized** `.dmg` build pipeline (`scripts/package.sh`).
+
+### Notes
+- Reads claude.ai's **internal** usage endpoint (no public API); isolated to
+  `ClaudeSession.swift` so an upstream change degrades gracefully and is a
+  one-file fix.
