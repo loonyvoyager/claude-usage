@@ -1,6 +1,6 @@
 //
-//  ClaudeSession.swift
-//  ClaudeUsageBar
+//  UsageSession.swift
+//  UsageBar
 //
 //  ⚠️  THE QUARANTINE FILE  ⚠️
 //  This is the ONLY file that may know about URLs, request paths, JSON keys,
@@ -43,7 +43,7 @@ enum SessionError: Error {
 }
 
 @MainActor
-final class ClaudeSession: NSObject {
+final class UsageSession: NSObject {
 
     // MARK: - Quarantined constants (the only place these may appear)
 
@@ -409,7 +409,7 @@ final class ClaudeSession: NSObject {
 
 // MARK: - WKNavigationDelegate
 
-extension ClaudeSession: WKNavigationDelegate {
+extension UsageSession: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         loadContinuation?.resume()
         loadContinuation = nil

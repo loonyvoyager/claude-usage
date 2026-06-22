@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 #
-# install.sh — download the latest signed & notarized ClaudeUsageBar and install
+# install.sh — download the latest signed & notarized UsageBar and install
 # it to /Applications. For people who'd rather not click around a .dmg.
 #
-#   curl -fsSL https://raw.githubusercontent.com/loonyvoyager/claude-usage/main/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/loonyvoyager/usage-bar/main/scripts/install.sh | bash
 #
 # Override the install location with PREFIX (e.g. PREFIX="$HOME/Applications").
 #
 set -euo pipefail
 
-APP_NAME="ClaudeUsageBar"
-REPO="loonyvoyager/claude-usage"
+APP_NAME="UsageBar"
+REPO="loonyvoyager/usage-bar"
 DEST="${PREFIX:-/Applications}"
 DMG_URL="https://github.com/$REPO/releases/latest/download/$APP_NAME.dmg"
 

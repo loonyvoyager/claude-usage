@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #
-# uninstall.sh — remove ClaudeUsageBar and the local data it created (settings +
+# uninstall.sh — remove UsageBar and the local data it created (settings +
 # the saved claude.ai web-view session).
 #
-#   curl -fsSL https://raw.githubusercontent.com/loonyvoyager/claude-usage/main/scripts/uninstall.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/loonyvoyager/usage-bar/main/scripts/uninstall.sh | bash
 #
 set -euo pipefail
 
-APP_NAME="ClaudeUsageBar"
-BUNDLE_ID="com.local.ClaudeUsageBar"          # keep in sync with PRODUCT_BUNDLE_IDENTIFIER
+APP_NAME="UsageBar"
+BUNDLE_ID="dev.loonyvoyager.UsageBar"          # keep in sync with PRODUCT_BUNDLE_IDENTIFIER
 APP="${PREFIX:-/Applications}/$APP_NAME.app"
 
 echo "==> Quitting $APP_NAME…"

@@ -1,10 +1,10 @@
 //
 //  AppDelegate.swift
-//  ClaudeUsageBar
+//  UsageBar
 //
 //  The orchestrator. Owns the NSStatusItem, the dropdown panel, the login
 //  window, and the refresh timer. It is the ONLY place that wires the network
-//  (ClaudeSession) to the observable store (UsageStore) and down to the UI via
+//  (UsageSession) to the observable store (UsageStore) and down to the UI via
 //  closures. UI never calls the network directly (brief §3, invariant 2).
 //
 //  The dropdown is a borderless panel (not an NSPopover) so it has no arrow and
@@ -26,7 +26,7 @@ import Combine
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private let store = UsageStore()
-    private let session = ClaudeSession()
+    private let session = UsageSession()
 
     private let settings = AppSettings()
 
@@ -71,7 +71,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = statusItem.button {
             button.image = NSImage(systemSymbolName: "gauge.medium",
-                                   accessibilityDescription: "Claude usage")
+                                   accessibilityDescription: "claude.ai usage")
             button.imagePosition = .imageLeading
             button.target = self
             button.action = #selector(togglePanel)
@@ -266,7 +266,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         })
         let hosting = NSHostingController(rootView: view)
         let window = NSWindow(contentViewController: hosting)
-        window.title = "Sign in to Claude"
+        window.title = "Sign in to claude.ai"
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.setContentSize(NSSize(width: 460, height: 660))
         window.isReleasedWhenClosed = false
@@ -331,12 +331,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         switch settings.menuBarMode {
         case .iconOnly:
             button.image = NSImage(systemSymbolName: symbolName(for: usage.sessionPercent),
-                                   accessibilityDescription: "Claude usage \(usage.sessionPercent)%")
+                                   accessibilityDescription: "claude.ai usage \(usage.sessionPercent)%")
             button.imagePosition = .imageOnly
             button.title = ""
         case .iconPercent:
             button.image = NSImage(systemSymbolName: symbolName(for: usage.sessionPercent),
-                                   accessibilityDescription: "Claude usage \(usage.sessionPercent)%")
+                                   accessibilityDescription: "claude.ai usage \(usage.sessionPercent)%")
             button.imagePosition = .imageLeading
             button.title = " \(usage.sessionPercent)%"
         case .percentTime:

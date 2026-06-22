@@ -1,6 +1,6 @@
 # Distribution — signed & notarized .dmg
 
-How to build a `ClaudeUsageBar.dmg` that anyone can download from a website and
+How to build a `UsageBar.dmg` that anyone can download from a website and
 open with no Gatekeeper warning.
 
 The build is automated by [`scripts/package.sh`](scripts/package.sh); the steps
@@ -25,7 +25,7 @@ You need an **Apple Developer Program** membership ($99/yr).
 4. **Store notary credentials once** (saved in your keychain, not in the repo):
 
    ```sh
-   xcrun notarytool store-credentials "ClaudeUsageBarNotary" \
+   xcrun notarytool store-credentials "UsageBarNotary" \
      --apple-id "you@example.com" \
      --team-id "A1B2C3D4E5" \
      --password "abcd-efgh-ijkl-mnop"   # the app-specific password
@@ -37,13 +37,13 @@ You need an **Apple Developer Program** membership ($99/yr).
 DEVELOPMENT_TEAM=A1B2C3D4E5 ./scripts/package.sh
 ```
 
-Output: `build/ClaudeUsageBar.dmg` (plus its SHA-256). Upload that to your site.
+Output: `build/UsageBar.dmg` (plus its SHA-256). Upload that to your site.
 
 The script: archives a Release build → exports a Developer-ID-signed app (hardened
 runtime) → notarizes it with `notarytool` → staples the ticket into the app →
 packs it into a drag-to-Applications `.dmg`.
 
-> Override defaults with env vars: `NOTARY_PROFILE` (default `ClaudeUsageBarNotary`),
+> Override defaults with env vars: `NOTARY_PROFILE` (default `UsageBarNotary`),
 > `CONFIG` (default `Release`).
 
 ## Versioning
@@ -54,8 +54,8 @@ Bump before each release in the target's build settings (or `project.pbxproj`):
 ## Verifying it'll open cleanly
 
 ```sh
-xcrun stapler validate build/export/ClaudeUsageBar.app
-spctl -a -vvv -t install build/export/ClaudeUsageBar.app   # expect: accepted, source=Notarized Developer ID
+xcrun stapler validate build/export/UsageBar.app
+spctl -a -vvv -t install build/export/UsageBar.app   # expect: accepted, source=Notarized Developer ID
 ```
 
 ## Notes

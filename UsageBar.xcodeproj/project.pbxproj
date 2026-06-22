@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC0000000000000000000001 /* ClaudeUsageBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* ClaudeUsageBarApp.swift */; };
+		AC0000000000000000000001 /* UsageBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* UsageBarApp.swift */; };
 		AC0000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000002 /* AppDelegate.swift */; };
-		AC0000000000000000000003 /* ClaudeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000003 /* ClaudeSession.swift */; };
+		AC0000000000000000000003 /* UsageSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000003 /* UsageSession.swift */; };
 		AC0000000000000000000004 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* LoginView.swift */; };
 		AC0000000000000000000005 /* UsagePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000005 /* UsagePopoverView.swift */; };
 		AC0000000000000000000006 /* Usage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000006 /* Usage.swift */; };
@@ -17,14 +17,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AB0000000000000000000001 /* ClaudeUsageBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeUsageBarApp.swift; sourceTree = "<group>"; };
+		AB0000000000000000000001 /* UsageBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageBarApp.swift; sourceTree = "<group>"; };
 		AB0000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AB0000000000000000000003 /* ClaudeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeSession.swift; sourceTree = "<group>"; };
+		AB0000000000000000000003 /* UsageSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageSession.swift; sourceTree = "<group>"; };
 		AB0000000000000000000004 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB0000000000000000000005 /* UsagePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsagePopoverView.swift; sourceTree = "<group>"; };
 		AB0000000000000000000006 /* Usage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usage.swift; sourceTree = "<group>"; };
 		AB0000000000000000000007 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AA0000000000000000000006 /* ClaudeUsageBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeUsageBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000006 /* UsageBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UsageBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 		AA0000000000000000000002 = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000004 /* ClaudeUsageBar */,
+				AA0000000000000000000004 /* UsageBar */,
 				AA0000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,31 +49,31 @@
 		AA0000000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000006 /* ClaudeUsageBar.app */,
+				AA0000000000000000000006 /* UsageBar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AA0000000000000000000004 /* ClaudeUsageBar */ = {
+		AA0000000000000000000004 /* UsageBar */ = {
 			isa = PBXGroup;
 			children = (
-				AB0000000000000000000001 /* ClaudeUsageBarApp.swift */,
+				AB0000000000000000000001 /* UsageBarApp.swift */,
 				AB0000000000000000000002 /* AppDelegate.swift */,
-				AB0000000000000000000003 /* ClaudeSession.swift */,
+				AB0000000000000000000003 /* UsageSession.swift */,
 				AB0000000000000000000004 /* LoginView.swift */,
 				AB0000000000000000000005 /* UsagePopoverView.swift */,
 				AB0000000000000000000006 /* Usage.swift */,
 				AB0000000000000000000007 /* Assets.xcassets */,
 			);
-			path = ClaudeUsageBar;
+			path = UsageBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA0000000000000000000005 /* ClaudeUsageBar */ = {
+		AA0000000000000000000005 /* UsageBar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA000000000000000000000B /* Build configuration list for PBXNativeTarget "ClaudeUsageBar" */;
+			buildConfigurationList = AA000000000000000000000B /* Build configuration list for PBXNativeTarget "UsageBar" */;
 			buildPhases = (
 				AA0000000000000000000007 /* Sources */,
 				AA0000000000000000000008 /* Frameworks */,
@@ -83,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = ClaudeUsageBar;
-			productName = ClaudeUsageBar;
-			productReference = AA0000000000000000000006 /* ClaudeUsageBar.app */;
+			name = UsageBar;
+			productName = UsageBar;
+			productReference = AA0000000000000000000006 /* UsageBar.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -103,7 +103,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AA000000000000000000000A /* Build configuration list for PBXProject "ClaudeUsageBar" */;
+			buildConfigurationList = AA000000000000000000000A /* Build configuration list for PBXProject "UsageBar" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -116,7 +116,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA0000000000000000000005 /* ClaudeUsageBar */,
+				AA0000000000000000000005 /* UsageBar */,
 			);
 		};
 /* End PBXProject section */
@@ -137,9 +137,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC0000000000000000000001 /* ClaudeUsageBarApp.swift in Sources */,
+				AC0000000000000000000001 /* UsageBarApp.swift in Sources */,
 				AC0000000000000000000002 /* AppDelegate.swift in Sources */,
-				AC0000000000000000000003 /* ClaudeSession.swift in Sources */,
+				AC0000000000000000000003 /* UsageSession.swift in Sources */,
 				AC0000000000000000000004 /* LoginView.swift in Sources */,
 				AC0000000000000000000005 /* UsagePopoverView.swift in Sources */,
 				AC0000000000000000000006 /* Usage.swift in Sources */,
@@ -250,7 +250,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.ClaudeUsageBar;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.loonyvoyager.UsageBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -274,7 +274,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.ClaudeUsageBar;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.loonyvoyager.UsageBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -284,7 +284,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA000000000000000000000A /* Build configuration list for PBXProject "ClaudeUsageBar" */ = {
+		AA000000000000000000000A /* Build configuration list for PBXProject "UsageBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA000000000000000000000C /* Debug */,
@@ -293,7 +293,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA000000000000000000000B /* Build configuration list for PBXNativeTarget "ClaudeUsageBar" */ = {
+		AA000000000000000000000B /* Build configuration list for PBXNativeTarget "UsageBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA000000000000000000000E /* Debug */,

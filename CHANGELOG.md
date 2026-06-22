@@ -1,12 +1,12 @@
 # Changelog
 
-Notable changes to ClaudeUsageBar. Format loosely follows
+Notable changes to UsageBar. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versions track app releases.
 
 ## [0.1.0] — unreleased (first public release)
 
 ### Added
-- Menu-bar app showing Claude **session** and **weekly** usage (% + reset
+- Menu-bar app showing claude.ai **session** and **weekly** usage (% + reset
   countdowns), a **per-model** breakdown, and pay-as-you-go **credits** — each row
   shown only when claude.ai exposes that data.
 - In-memory **session-history sparkline**.
@@ -21,5 +21,5 @@ Notable changes to ClaudeUsageBar. Format loosely follows
 
 ### Notes
 - Reads claude.ai's **internal** usage endpoint (no public API); isolated to
-  `ClaudeSession.swift` so an upstream change degrades gracefully and is a
+  `UsageSession.swift` so an upstream change degrades gracefully and is a
   one-file fix.

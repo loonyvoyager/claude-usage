@@ -1,14 +1,14 @@
 //
 //  LoginView.swift
-//  ClaudeUsageBar
+//  UsageBar
 //
 //  Embedded WKWebView login. The user signs in to claude.ai once; cookies
 //  persist in the shared default WKWebsiteDataStore (the same store
-//  ClaudeSession reads). No cookie scraping, no token paste (brief §2).
+//  UsageSession reads). No cookie scraping, no token paste (brief §2).
 //
 //  Authentication is detected purely by navigation: once the web view lands
 //  back on a claude.ai page that isn't the login/auth flow, we call
-//  `onAuthenticated`. Claudesession's actual fetch is the final authority.
+//  `onAuthenticated`. UsageSession's actual fetch is the final authority.
 //
 
 import SwiftUI
@@ -24,7 +24,7 @@ struct LoginView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
-        // Shared, persistent cookie jar — must match ClaudeSession.makeWebView().
+        // Shared, persistent cookie jar — must match UsageSession.makeWebView().
         config.websiteDataStore = .default()
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = context.coordinator

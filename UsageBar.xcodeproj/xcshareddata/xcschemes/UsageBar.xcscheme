@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA0000000000000000000005"
-               BuildableName = "ClaudeUsageBar.app"
-               BlueprintName = "ClaudeUsageBar"
-               ReferencedContainer = "container:ClaudeUsageBar.xcodeproj">
+               BuildableName = "UsageBar.app"
+               BlueprintName = "UsageBar"
+               ReferencedContainer = "container:UsageBar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA0000000000000000000005"
-            BuildableName = "ClaudeUsageBar.app"
-            BlueprintName = "ClaudeUsageBar"
-            ReferencedContainer = "container:ClaudeUsageBar.xcodeproj">
+            BuildableName = "UsageBar.app"
+            BlueprintName = "UsageBar"
+            ReferencedContainer = "container:UsageBar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -60,9 +60,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA0000000000000000000005"
-            BuildableName = "ClaudeUsageBar.app"
-            BlueprintName = "ClaudeUsageBar"
-            ReferencedContainer = "container:ClaudeUsageBar.xcodeproj">
+            BuildableName = "UsageBar.app"
+            BlueprintName = "UsageBar"
+            ReferencedContainer = "container:UsageBar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

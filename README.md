@@ -1,10 +1,10 @@
-# ClaudeUsageBar
+# Usage Bar
 
 [![macOS 13+](https://img.shields.io/badge/macOS-13%2B-111111?logo=apple&logoColor=white)](#requirements)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/loonyvoyager/claude-usage?label=release)](https://github.com/loonyvoyager/claude-usage/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/loonyvoyager/usage-bar?label=release)](https://github.com/loonyvoyager/usage-bar/releases/latest)
 
-A tiny native **macOS menu-bar app** that shows your current **Claude usage** at a
+A tiny native **macOS menu-bar app** that shows your current **claude.ai usage** at a
 glance — session %, weekly %, per-model split, reset countdowns, and pay-as-you-go
 credits — so you never have to open claude.ai → Settings → Usage. It sits by your
 clock: no Dock icon, no window.
@@ -14,11 +14,11 @@ clock: no Dock icon, no window.
 
 <p align="center">
   <img src="assets/screenshot.png" width="720"
-       alt="ClaudeUsageBar menu-bar dropdown showing session, weekly, per-model, and credit usage">
+       alt="UsageBar menu-bar dropdown showing session, weekly, per-model, and credit usage">
 </p>
 
 <p align="center">
-  <a href="https://github.com/loonyvoyager/claude-usage/releases/latest/download/ClaudeUsageBar.dmg"><b>⬇&nbsp; Download ClaudeUsageBar.dmg</b></a><br>
+  <a href="https://github.com/loonyvoyager/usage-bar/releases/latest/download/UsageBar.dmg"><b>⬇&nbsp; Download UsageBar.dmg</b></a><br>
   <sub>Signed &amp; notarized — opens with no Gatekeeper warning.</sub>
 </p>
 
@@ -43,8 +43,8 @@ Each row appears only if claude.ai returns that data, so the panel stays tidy.
 
 ## Install
 
-1. Download **`ClaudeUsageBar.dmg`** from
-   [Releases](https://github.com/loonyvoyager/claude-usage/releases/latest), open
+1. Download **`UsageBar.dmg`** from
+   [Releases](https://github.com/loonyvoyager/usage-bar/releases/latest), open
    it, and drag the app into **Applications**.
 2. It's **signed and notarized**, so it just opens — no right-click, no Gatekeeper
    warning.
@@ -55,10 +55,10 @@ Each row appears only if claude.ai returns that data, so the panel stays tidy.
 
 ```sh
 # install — downloads the latest signed release into /Applications
-curl -fsSL https://raw.githubusercontent.com/loonyvoyager/claude-usage/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/loonyvoyager/usage-bar/main/scripts/install.sh | bash
 
 # uninstall — removes the app plus its saved session and settings
-curl -fsSL https://raw.githubusercontent.com/loonyvoyager/claude-usage/main/scripts/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/loonyvoyager/usage-bar/main/scripts/uninstall.sh | bash
 ```
 
 Settings — launch at login, refresh interval, warning threshold, menu-bar style,
@@ -76,13 +76,13 @@ There's no official consumer usage API, so the app reads the same internal
 endpoint claude.ai's own usage page calls — by running `fetch()` inside a hidden
 web view on the claude.ai origin, so it rides your normal logged-in session.
 Because that endpoint is internal, it can change without notice; all of that
-knowledge is isolated in one file (`ClaudeSession.swift`) with defensive parsing,
+knowledge is isolated in one file (`UsageSession.swift`) with defensive parsing,
 so a change degrades to a visible "couldn't read usage" message (never a crash)
 and is a one-file fix.
 
 ## Build from source
 
-Open `ClaudeUsageBar.xcodeproj` in Xcode and run (⌘R). To build a signed,
+Open `UsageBar.xcodeproj` in Xcode and run (⌘R). To build a signed,
 notarized release for distribution, see [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 <details>
@@ -90,14 +90,14 @@ notarized release for distribution, see [`DISTRIBUTION.md`](DISTRIBUTION.md).
 
 | File | Role |
 |------|------|
-| `ClaudeUsageBarApp.swift` | `@main` entry; menu-bar-only scene. |
+| `UsageBarApp.swift` | `@main` entry; menu-bar-only scene. |
 | `AppDelegate.swift` | Status item, the dropdown panel, login window, refresh timer; the one place that wires network → store → UI. |
-| `ClaudeSession.swift` | **Quarantined** cookie session + usage fetch + parsing — the only file that knows URLs / JSON keys / cookies. |
+| `UsageSession.swift` | **Quarantined** cookie session + usage fetch + parsing — the only file that knows URLs / JSON keys / cookies. |
 | `LoginView.swift` | Embedded `WKWebView` login. |
 | `UsagePopoverView.swift` | SwiftUI dropdown UI; reads state, never touches the network. |
 | `Usage.swift` | `Usage` model + observable store + settings. |
 
-State flows one way: `ClaudeSession` → `UsageStore` → SwiftUI.
+State flows one way: `UsageSession` → `UsageStore` → SwiftUI.
 </details>
 
 ## Trademark / not affiliated

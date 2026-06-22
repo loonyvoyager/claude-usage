@@ -1,6 +1,6 @@
 //
 //  UsagePopoverView.swift
-//  ClaudeUsageBar
+//  UsageBar
 //
 //  The SwiftUI popover. Reads UsageStore.state and renders one layout per
 //  state. It never touches the network — it only invokes the closures handed
@@ -59,7 +59,7 @@ struct UsagePopoverView: View {
         HStack(spacing: 8) {
             Image(systemName: "gauge.medium")
                 .foregroundStyle(.secondary)
-            Text("Claude Usage")
+            Text("Usage Bar")
                 .font(.headline)
             Spacer()
             statusDot
@@ -96,7 +96,7 @@ struct UsagePopoverView: View {
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Button(action: onLogin) {
-                Text("Sign in to Claude").frame(maxWidth: .infinity)
+                Text("Sign in to claude.ai").frame(maxWidth: .infinity)
             }
             .controlSize(.large)
             .buttonStyle(.borderedProminent)

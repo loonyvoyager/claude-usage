@@ -1,12 +1,12 @@
 //
 //  Usage.swift
-//  ClaudeUsageBar
+//  UsageBar
 //
 //  The model layer. Plain, typed Swift values + an observable store.
 //  This file knows NOTHING about URLs, JSON keys, or cookies — that all
-//  lives in ClaudeSession.swift — the only file that knows the endpoint.
+//  lives in UsageSession.swift — the only file that knows the endpoint.
 //
-//  State flows one way:  ClaudeSession → UsageStore.state (enum) → UI.
+//  State flows one way:  UsageSession → UsageStore.state (enum) → UI.
 //
 
 import Foundation
@@ -18,13 +18,13 @@ struct ModelUsage: Identifiable, Equatable {
     /// Stable identity so SwiftUI lists diff cleanly and Equatable is meaningful.
     var id: String { modelName }
     let modelName: String
-    /// 0…100, already normalized by ClaudeSession.
+    /// 0…100, already normalized by UsageSession.
     let percent: Int
 }
 
 /// Pay-as-you-go "extra usage" credit pool (optional). Amounts are already in
 /// currency units (e.g. dollars), converted from the endpoint's minor units by
-/// ClaudeSession — the UI just formats them.
+/// UsageSession — the UI just formats them.
 struct CreditUsage: Equatable {
     let used: Double
     let limit: Double

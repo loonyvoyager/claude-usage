@@ -1,6 +1,6 @@
 //
-//  ClaudeUsageBarApp.swift
-//  ClaudeUsageBar
+//  UsageBarApp.swift
+//  UsageBar
 //
 //  App entry point. This is a menu-bar-only agent (LSUIElement = true), so
 //  there is no main window scene. All real work happens in AppDelegate; the
@@ -11,7 +11,7 @@
 import SwiftUI
 
 @main
-struct ClaudeUsageBarApp: App {
+struct UsageBarApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# package.sh — build a Developer-ID-signed, Apple-notarized ClaudeUsageBar.dmg
+# package.sh — build a Developer-ID-signed, Apple-notarized UsageBar.dmg
 # ready to host for download. See DISTRIBUTION.md for one-time setup.
 #
 # Required env:
 #   DEVELOPMENT_TEAM   Your 10-char Apple Team ID (e.g. A1B2C3D4E5)
 # Optional env:
-#   NOTARY_PROFILE     notarytool keychain profile name (default: ClaudeUsageBarNotary)
+#   NOTARY_PROFILE     notarytool keychain profile name (default: UsageBarNotary)
 #   CONFIG             Xcode configuration (default: Release)
 #
 # Usage:  DEVELOPMENT_TEAM=A1B2C3D4E5 ./scripts/package.sh
@@ -18,11 +18,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
 
-APP_NAME="ClaudeUsageBar"
-SCHEME="ClaudeUsageBar"
+APP_NAME="UsageBar"
+SCHEME="UsageBar"
 PROJECT="$APP_NAME.xcodeproj"
 CONFIG="${CONFIG:-Release}"
-NOTARY_PROFILE="${NOTARY_PROFILE:-ClaudeUsageBarNotary}"
+NOTARY_PROFILE="${NOTARY_PROFILE:-UsageBarNotary}"
 TEAM_ID="${DEVELOPMENT_TEAM:?Set DEVELOPMENT_TEAM to your 10-char Apple Team ID (see DISTRIBUTION.md)}"
 
 BUILD="$ROOT/build"
